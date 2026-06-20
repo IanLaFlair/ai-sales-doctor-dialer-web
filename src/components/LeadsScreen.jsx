@@ -4,7 +4,7 @@ import ErrorBanner from './ErrorBanner.jsx'
 
 const AGENT_ID = 'agent_1'
 
-export default function LeadsScreen({ onSessionCreated }) {
+export default function LeadsScreen({ onSessionCreated, onOpenCrm }) {
   const [leads, setLeads] = useState([])
   const [selected, setSelected] = useState(() => new Set())
   const [loading, setLoading] = useState(true)
@@ -62,6 +62,11 @@ export default function LeadsScreen({ onSessionCreated }) {
           <div className="brand-tag">ADVANCED</div>
         </div>
         <div className="topbar-right">
+          {onOpenCrm && (
+            <button className="btn-link" onClick={onOpenCrm}>
+              🗂 CRM Inspector
+            </button>
+          )}
           <div className={`conn-pill ${offline ? 'off' : 'ok'}`}>
             <span className="conn-dot" />
             {offline ? 'Backend unreachable' : 'API connected'}

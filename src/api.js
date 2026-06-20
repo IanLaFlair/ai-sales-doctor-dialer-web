@@ -31,3 +31,8 @@ export const stopSession = (id) =>
   request(`/sessions/${id}/stop`, { method: 'POST' })
 
 export const getSession = (id) => request(`/sessions/${id}`)
+
+// Mock CRM (for the CRM Inspector panel)
+export const getCrmContacts = () => request('/mock-crm/contacts')
+export const getCrmActivities = () => request('/mock-crm/activities')
+export const getLeadActivities = (id) => request(`/leads/${id}/crm-activities`)

@@ -6,7 +6,7 @@ import ErrorBanner from './ErrorBanner.jsx'
 
 const POLL_MS = 1000
 
-export default function SessionScreen({ sessionId, onBack }) {
+export default function SessionScreen({ sessionId, onBack, onOpenCrm }) {
   const [session, setSession] = useState(null)
   const [offline, setOffline] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -106,6 +106,11 @@ export default function SessionScreen({ sessionId, onBack }) {
           )}
         </div>
         <div className="topbar-right">
+          {onOpenCrm && (
+            <button className="btn-link" onClick={onOpenCrm}>
+              🗂 CRM Inspector
+            </button>
+          )}
           <div className={`poll-ind ${running ? 'live' : 'paused'}`}>
             <span className="poll-dot" />
             {running ? 'Live · polling every 1s' : 'Polling paused'}
