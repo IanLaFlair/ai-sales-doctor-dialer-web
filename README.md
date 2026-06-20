@@ -6,7 +6,7 @@ Node/Express backend over HTTP and **polls** for live updates (no WebSockets).
 - **Screen 1 — Leads + session creation:** list seeded leads, select with checkboxes,
   create a dialer session.
 - **Screen 2 — Dialer session:** two live line cards, winner indicator, session metrics,
-  per-call CRM sync status. Polls `GET /sessions/:id` every **1.5s**.
+  per-call CRM sync status. Polls `GET /sessions/:id` every **1s** until `status === "STOPPED"`.
 
 Plain JavaScript, plain `fetch`, no state library, no router (screens switch via state).
 One hand-written stylesheet (`src/styles.css`).
@@ -110,7 +110,7 @@ Base URL = `VITE_API_URL` (default `http://localhost:4000`).
 | `POST` | `/sessions` | body `{ agentId, leadIds }` → session view |
 | `POST` | `/sessions/:id/start` | → session view |
 | `POST` | `/sessions/:id/stop` | → session view |
-| `GET`  | `/sessions/:id` | session view (polled every 1.5s) |
+| `GET`  | `/sessions/:id` | session view (polled every 1s until STOPPED) |
 
 Call statuses: `RINGING | CONNECTED | NO_ANSWER | BUSY | VOICEMAIL | CANCELED_BY_DIALER`.
 Status colors — CONNECTED green, RINGING neutral, NO_ANSWER/BUSY/VOICEMAIL amber,

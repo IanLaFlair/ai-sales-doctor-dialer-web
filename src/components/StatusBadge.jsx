@@ -1,26 +1,27 @@
-// Maps a call status to a color-coded badge.
-// CONNECTED green, RINGING neutral, NO_ANSWER/BUSY/VOICEMAIL amber,
-// CANCELED_BY_DIALER red.
-const TONE = {
-  RINGING: 'neutral',
-  CONNECTED: 'green',
-  NO_ANSWER: 'amber',
-  BUSY: 'amber',
-  VOICEMAIL: 'amber',
-  CANCELED_BY_DIALER: 'red',
+// Call status → color-coded badge, matching the Sales Dialer design.
+// CONNECTED green · RINGING neutral (pulsing dot) ·
+// NO_ANSWER/BUSY/VOICEMAIL amber · CANCELED_BY_DIALER red.
+const STATUS = {
+  RINGING: { label: 'Ringing', tone: 'neutral' },
+  CONNECTED: { label: 'Connected', tone: 'green' },
+  NO_ANSWER: { label: 'No answer', tone: 'amber' },
+  BUSY: { label: 'Busy', tone: 'amber' },
+  VOICEMAIL: { label: 'Voicemail', tone: 'amber' },
+  CANCELED_BY_DIALER: { label: 'Canceled', tone: 'red' },
 }
 
-const LABEL = {
-  RINGING: 'Ringing',
-  CONNECTED: 'Connected',
-  NO_ANSWER: 'No answer',
-  BUSY: 'Busy',
-  VOICEMAIL: 'Voicemail',
-  CANCELED_BY_DIALER: 'Canceled',
+export function statusMeta(status) {
+  return STATUS[status] || STATUS.RINGING
 }
 
-export default function StatusBadge({ status }) {
+export default function StatusBadge({ status, size }) {
   if (!status) return null
-  const tone = TONE[status] || 'neutral'
-  return <span className={`badge badge-${tone}`}>{LABEL[status] || status}</span>
+  const { label, tone } = statusMeta(status)
+  const ringing = status === 'RINGING' ? 'ringing' : ''
+  return (
+    <span className={`badge ${tone} ${ringing} ${size === 'sm' ? 'sm' : ''}`}>
+      <span className="badge-dot" />
+      {label}
+    </span>
+  )
 }
